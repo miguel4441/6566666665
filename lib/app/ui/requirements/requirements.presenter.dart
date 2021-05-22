@@ -1,5 +1,5 @@
-import 'package:yachap/app/ui/requirements/requirements.view.dart';
-import 'package:yachap/domain/repository/requirements.repository.dart';
+import 'package:yachaq/app/ui/requirements/requirements.view.dart';
+import 'package:yachaq/domain/repository/requirements.repository.dart';
 
 class RequirementsPresenter {
   RequirementsRepository requirementsRepository;

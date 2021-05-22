@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html_view/flutter_html_view.dart';
-import 'package:yachap/app/ui/nav_bar/bar.dart';
-import 'package:yachap/app/ui/requirements/requirements.dart';
-import 'package:yachap/app/utils/resources.dart';
-import 'package:yachap/data/rr/response/consultation_pension.response.dart';
-import 'package:yachap/data/rr/response/description.response.dart';
+import 'package:yachaq/app/ui/nav_bar/bar.dart';
+import 'package:yachaq/app/ui/requirements/requirements.dart';
+import 'package:yachaq/app/utils/colors.dart';
+import 'package:yachaq/app/utils/resources.dart';
+import 'package:yachaq/data/rr/response/consultation_pension.response.dart';
+import 'package:yachaq/data/rr/response/description.response.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NotFoundUserInformationPensionPage extends StatefulWidget {
-
   ConsultationPensionResponse userInfo;
   DescriptionResponse descriptionInfo;
 
@@ -22,8 +22,6 @@ class NotFoundUserInformationPensionPage extends StatefulWidget {
 }
 
 class _NotFoundUserInformationPensionPageState extends State<NotFoundUserInformationPensionPage> {
-
-
   @override
   void initState() {
     super.initState();
@@ -42,12 +40,11 @@ class _NotFoundUserInformationPensionPageState extends State<NotFoundUserInforma
         child: SafeArea(
             child: Scaffold(
               backgroundColor: Colors.transparent,
-              appBar: generalBar(context),
+              appBar: pensionBar(context),
               body: Container(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
-                  padding:
-                  EdgeInsets.only(top: 20, left: 40, right: 40, bottom: 40),
+                  padding: EdgeInsets.only(top: 20, left: 40, right: 40, bottom: 40),
                   child: Center(
                     child: Column(
                       children: [
@@ -60,100 +57,89 @@ class _NotFoundUserInformationPensionPageState extends State<NotFoundUserInforma
                         Padding(
                           padding: EdgeInsets.only(bottom: 10),
                         ),
-                        Text("DNI NO ENCONTRADO",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w900),
-                            strutStyle: StrutStyle(height: 1.4)),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 5),
-                        ),
                         Container(
-                            height: 150,
-                            width: 150,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(Radius.circular(75)),
-                            ),
-                            child: Image.asset(Resources.pension,
-                                width: 150, height: 150)),
-
-
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 20),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 10),
-                        ),
-                        Text("Lamentablemente usted",
-                            style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.normal),
-                            strutStyle: StrutStyle(height: 1.2)),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 10),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(20.0)
-                          ),
                           child: Row(
-                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image.asset(Resources.close_red,
-                                  width: 50, height: 50, fit: BoxFit.contain),
-                              Padding(
-                                padding: EdgeInsets.only(right: 10),
+                              Flexible(
+                                child: Text("DNI ", style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal)),
                               ),
-                              Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("No figura en el\npadrón de usuarios",
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.normal),
-                                        strutStyle: StrutStyle(height: 1.2))
-                                  ])
+                              Flexible(
+                                  child: Text("NO encontrado",
+                                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+                                      strutStyle: StrutStyle(height: 1.4)))
                             ],
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.only(bottom: 20),
                         ),
-                        Text(
-                          "Condición: ",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 10),
-                        ),
-                        Text(widget.userInfo.CONDICION ?? "-",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                            strutStyle: StrutStyle(height: 1.2)),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 30),
-                        ),
-                        HtmlView(
-                          data: widget.descriptionInfo.description.isEmpty ? "-" : widget.descriptionInfo.description,
-                          scrollable: false,
+                        Container(
+                          //padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              color: Colors.white,
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(38.0)),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Image.asset(Resources.close_red, width: 55, height: 55, fit: BoxFit.contain),
+                              Padding(
+                                padding: EdgeInsets.only(right: 10),
+                              ),
+                              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                Padding(
+                                  padding: EdgeInsets.only(top: 2),
+                                ),
+                                Text("USUARIO(a)",
+                                    style: TextStyle(fontSize: 23, fontWeight: FontWeight.w300),
+                                    strutStyle: StrutStyle(height: 1.2)),
+                                Text("no encontrado",
+                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300),
+                                    strutStyle: StrutStyle(height: 1.2)),
+                                Padding(
+                                  padding: EdgeInsets.only(bottom: 2),
+                                ),
+                              ]),
+                              Padding(
+                                padding: EdgeInsets.only(right: 20),
+                              )
+                            ],
+                          ),
                         ),
                         Padding(
                           padding: EdgeInsets.only(bottom: 40),
                         ),
+                        Text("No cumples con los requisitos de ingreso a Pensión 65",
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+                            strutStyle: StrutStyle(height: 1.2),
+                            textAlign: TextAlign.center),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                        ),
+                        Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                          Flexible(
+                            child: HtmlView(
+                              data:
+                              "<h3>Consulta tu clasificación socieconómica aquí<b><a href=https://bit.ly/3rz7OKV target=_blank>https://bit.ly/3rz7OKV</a></b></h3>",
+                              scrollable: false,
+                            ),
+                          )
+                        ]),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 40),
+                        ),
                         FlatButton(
-                          height: 50,
+                          height: 45,
                           textColor: Colors.white,
-                          color: Colors.red,
+                          color: ColorsApp.colorBoton,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
+                            borderRadius: BorderRadius.circular(38.0),
                           ),
                           child: Text(
-                            "VER REQUISITOS",
-                            style: TextStyle(
-                                fontSize: 16.0, fontWeight: FontWeight.bold),
+                            " Ver requisitos ",
+                            style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.w300),
                             strutStyle: StrutStyle(height: 1.2),
                           ),
                           onPressed: () {
@@ -179,5 +165,5 @@ class _NotFoundUserInformationPensionPageState extends State<NotFoundUserInforma
       throw 'Could not launch $url';
     }
   }
-
 }
+

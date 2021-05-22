@@ -1,5 +1,5 @@
-import 'package:yachap/app/ui/base/default.view.dart';
-import 'package:yachap/data/rr/response/questions.response.dart';
+import 'package:yachaq/app/ui/base/default.view.dart';
+import 'package:yachaq/data/rr/response/questions.response.dart';
 
 
 abstract class QuestionsView extends DefaultView{

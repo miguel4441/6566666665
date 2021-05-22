@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:yachap/data/http_api_rest.dart';
-import 'package:yachap/data/rr/response/requirements.response.dart';
-import 'package:yachap/domain/usecase/questions.usecase.dart';
-import 'package:yachap/data/rr/response/questions.response.dart';
+import 'package:yachaq/data/http_api_rest.dart';
+import 'package:yachaq/data/rr/response/requirements.response.dart';
+import 'package:yachaq/domain/usecase/questions.usecase.dart';
+import 'package:yachaq/data/rr/response/questions.response.dart';
 
 
 class QuestionsRepository implements QuestionsUseCase {

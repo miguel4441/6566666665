@@ -1,5 +1,5 @@
-import 'package:yachap/app/ui/general/general.view.dart';
-import 'package:yachap/domain/repository/consultations.repository.dart';
+import 'package:yachaq/app/ui/general/general.view.dart';
+import 'package:yachaq/domain/repository/consultations.repository.dart';
 
 class GeneralPresenter {
   ConsultationsRepository consultationsRepository;
@@ -10,12 +10,12 @@ class GeneralPresenter {
   getUserInformation(String dni, String fnac) {
     view.showLoading();
     consultationsRepository.consultationGeneral(dni, fnac,
-        (userInformation, descriptionResponse) {
-      view.hideLoading();
-      view.getUserInformation(userInformation, descriptionResponse);
-    }, (message) {
-      view.hideLoading();
-      view.onError(message);
-    });
+            (userInformation, descriptionResponse) {
+          view.hideLoading();
+          view.getUserInformation(userInformation, descriptionResponse);
+        }, (message) {
+          view.hideLoading();
+          view.onError(message);
+        });
   }
 }

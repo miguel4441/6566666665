@@ -8,9 +8,9 @@ class DescriptionResponse {
 
   factory DescriptionResponse.fromJson(dynamic json) {
     return DescriptionResponse(
-        icon: json['icono'],
-        description: json['descripcion'],
-        infotipo: json['infotipo'].toString().replaceAll(RegExp(r'^<p>|</p>'), ''),
+        icon: json['icono'].toString().isEmpty == true || json['icono'] == null ? '' : json['icono'].toString(),
+        description: json['descripcion'].toString().isEmpty == true || json['descripcion'] == null ? '' : json['descripcion'].toString(),
+        infotipo: json['infotipo'].toString().replaceAll(RegExp(r'^<p>|</p>'), '').isEmpty == true || json['infotipo'] == null ? '' : json['infotipo'].toString().replaceAll(RegExp(r'^<p>|</p>'), '') ,
     );
   }
 
@@ -22,12 +22,12 @@ class DescriptionResponse {
     return items ?? [];
   }
 
-  Map<String, dynamic> toJson() {
+  /*Map<String, dynamic> toJson() {
     return {
       "icon": icon,
       "description": description,
       "infotipo": infotipo,
     };
-  }
+  }*/
 
 }

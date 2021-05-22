@@ -33,21 +33,21 @@ class ConsultationPensionResponse {
         this.MENSAJE});
 
   ConsultationPensionResponse.fromJson(dynamic json) {
-    DNI = json['DNI'];
-    NOMBRES = json['NOMBRES'];
-    APELLIDOS_NOMBRES = json['APELLIDOS_NOMBRES'];
-    SEXO = json['SEXO'];
-    MONTO = json['MONTO'];
-    PERIODO = json['PERIODO'];
-    TERCERO = json['TERCERO'];
-    MODALIDAD_PAGO = json['MODALIDAD_PAGO'];
-    LUGAR_AGENCIA = json['LUGAR_AGENCIA'];
-    FECHA_PAGO = json['FECHA_PAGO'];
-    FECHAPAGOLABEL = json['FECHAPAGOLABEL'];
-    LATITUD = json['LATITUD'];
-    LONGITUD = json['LONGITUD'];
-    CONDICION = json['CONDICION'];
-    MENSAJE = json['MENSAJE'];
+    DNI = json['DNI'].toString().isEmpty == true ? '' : json['DNI'].toString();
+    NOMBRES = json['NOMBRES'].toString().isEmpty == true ? '' : json['NOMBRES'].toString();
+    APELLIDOS_NOMBRES = json['APELLIDOS_NOMBRES'].toString().isEmpty == true ? '' : json['APELLIDOS_NOMBRES'].toString();
+    SEXO = json['SEXO'].toString().isEmpty == true ? '' : json['SEXO'].toString();;
+    MONTO = json['MONTO'].toString().isEmpty == true ? '' : json['MONTO'].toString();;
+    PERIODO = json['PERIODO'].toString().isEmpty == true ? '' : json['PERIODO'].toString();;
+    TERCERO = json['TERCERO'].toString().isEmpty == true ? '' : json['TERCERO'].toString();;
+    MODALIDAD_PAGO = json['MODALIDAD_PAGO'].toString().isEmpty == true ? '' : json['MODALIDAD_PAGO'].toString();;
+    LUGAR_AGENCIA = json['LUGAR_AGENCIA'].toString().isEmpty == true ? '' : json['LUGAR_AGENCIA'].toString();;
+    FECHA_PAGO = json['FECHA_PAGO'].toString().isEmpty == true ? '' : json['FECHA_PAGO'].toString();;
+    FECHAPAGOLABEL = json['FECHAPAGOLABEL'].toString().isEmpty == true ? '' : json['FECHAPAGOLABEL'].toString();;
+    LATITUD = json['LATITUD'].toString().isEmpty == true ? '' : json['LATITUD'].toString();;
+    LONGITUD = json['LONGITUD'].toString().isEmpty == true ? '' : json['LONGITUD'].toString();;
+    CONDICION = json['CONDICION'].toString().isEmpty == true ? '' : json['CONDICION'].toString();;
+    MENSAJE = json['MENSAJE'].toString().isEmpty == true ? '' : json['MENSAJE'].toString();;
   }
 
   static List<ConsultationPensionResponse> listFromJson(dynamic json) {

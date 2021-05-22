@@ -1,60 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:yachap/app/ui/dialog/dialog_init/dialog_initial.dart';
-import 'package:yachap/app/ui/general/general.dart';
 
-import 'package:yachap/app/ui/pay/pension_pay.dart';
-import 'package:yachap/app/ui/questions/questions.dart';
-import 'package:yachap/app/ui/requirements/requirements.dart';
+import 'package:yachaq/app/ui/general/general.dart';
+
+import 'package:yachaq/app/ui/pay/pension_pay.dart';
+import 'package:yachaq/app/ui/questions/questions.dart';
+import 'package:yachaq/app/ui/requirements/requirements.dart';
+import 'package:yachaq/app/utils/colors.dart';
  
-import 'package:yachap/app/utils/resources.dart';
-import 'package:yachap/data/rr/response/popapp.response.dart';
-import 'package:yachap/domain/repository/popapp.repository.dart';
+import 'package:yachaq/app/utils/resources.dart';
+
 
 class HomePage extends StatefulWidget {
-  static Route<dynamic> route() =>
-      MaterialPageRoute(builder: (context) => HomePage());
+  static Route<dynamic> route() => MaterialPageRoute(builder: (context) => HomePage());
 
   @override
   State<StatefulWidget> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  List<PopAppReponse> varpopAppList = [];
-
   @override
   void initState() {
     super.initState();
-
-    _showDialog();
-
-  }
-
-  _showDialog() async{
-    PopAppRepository popAppRepository = PopAppRepository();
-    await popAppRepository.bienvenidaYPagos((popAppList) {
-      varpopAppList.add(popAppList[0]);
-      varpopAppList.add(popAppList[1]);
-      varpopAppList.add(popAppList[2]);
-
-
-    }, (message) => null).whenComplete(() {
-
-       SchedulerBinding.instance.addPostFrameCallback((_) => showDialog(
-          context: context,
-          builder: (BuildContext context) {
-
-            print("cargando: "+varpopAppList[0].alerta);
-            return DialogInit(popAppList: varpopAppList);
-
-
-          }));
-    })  ;
-
-
-    //); Future.delayed(Duration(milliseconds: 5));
-
   }
 
   @override
@@ -77,47 +44,36 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          width: 222,
-                          height: 58,
-                          margin: EdgeInsets.only(bottom: 77),
+                          width: 180,
                           child: Image.asset(Resources.pension65),
+                          margin: EdgeInsets.only(bottom: 30),
                         ),
                         Container(
-                          width: 200,
-                          //height: 65,
-                          //margin: EdgeInsets.only(bottom: 170),
+                          width: 180,
+                          height: 48,
                           child: Image.asset(Resources.midis),
+                          margin: EdgeInsets.only(bottom: 100),
                         ),
-                        Padding(padding: EdgeInsets.only(bottom: 5)),
                         GestureDetector(
                           child: Container(
-                            height: 77,
+                            height: 55,
                             width: double.infinity,
                             decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(38.5)),
+                                color: ColorsApp.colorBoton,
+                                borderRadius: BorderRadius.all(Radius.circular(38.5)),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.grey.withOpacity(0.5),
                                     spreadRadius: 3,
                                     blurRadius: 7,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
+                                    offset: Offset(0, 3), // changes position of shadow
                                   )
                                 ]),
                             child: Center(
-                              child: Text(
-                                "CONSULTA GENERAL",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500),
-                                  strutStyle: StrutStyle(
-                                  height: 1.2
-                              )
-                              ),
+                              child: Text("Consulta General",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w300),
+                                  strutStyle: StrutStyle(height: 1.2)),
                             ),
                           ),
                           onTap: () {
@@ -127,34 +83,25 @@ class _HomePageState extends State<HomePage> {
                         Padding(padding: EdgeInsets.only(top: 20)),
                         GestureDetector(
                           child: Container(
-                            height: 77,
-                            padding: EdgeInsets.only(left: 20, right: 20),
+                            height: 55,
+                            //padding: EdgeInsets.only(left: 80, right: 80),
                             width: double.infinity,
                             decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(38.5)),
+                                color: ColorsApp.colorBoton,
+                                borderRadius: BorderRadius.all(Radius.circular(38.5)),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.grey.withOpacity(0.5),
                                     spreadRadius: 3,
                                     blurRadius: 7,
-                                    offset: Offset(
-                                        0, 3), // changes position of shadow
+                                    offset: Offset(0, 3), // changes position of shadow
                                   )
                                 ]),
                             child: Center(
-                              child: Text(
-                                "CONSULTA DE PAGO DE PENSIÓN",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500),
-                                  strutStyle: StrutStyle(
-                                      height: 1.5
-                                  )
-                              ),
+                              child: Text("Consulta de pago\nde Pensión 65",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w300),
+                                  strutStyle: StrutStyle(height: 1.5)),
                             ),
                           ),
                           onTap: () {
@@ -164,70 +111,54 @@ class _HomePageState extends State<HomePage> {
                         Padding(padding: EdgeInsets.only(top: 20)),
                         GestureDetector(
                             child: Container(
-                          height: 77,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(38.5)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 3,
-                                  blurRadius: 7,
-                                  offset: Offset(
-                                      0, 3), // changes position of shadow
-                                )
-                              ]),
-                          child: Center(
-                            child: Text(
-                              "REQUISITOS",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500),
-                              strutStyle: StrutStyle(
-                                  height: 1.2
+                              height: 55,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: ColorsApp.colorBoton,
+                                  borderRadius: BorderRadius.all(Radius.circular(38.5)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 3,
+                                      blurRadius: 7,
+                                      offset: Offset(0, 3), // changes position of shadow
+                                    )
+                                  ]),
+                              child: Center(
+                                child: Text(
+                                  "Requisitos",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w300),
+                                  strutStyle: StrutStyle(height: 1.2),
+                                  maxLines: 2,
+                                ),
                               ),
-                              maxLines: 2,
                             ),
-                          ),
-                        ), onTap: () {
+                            onTap: () {
                               Navigator.push(context, RequirementsPage.route());
-                        }),
-                        Padding(
-                          padding:  EdgeInsets.only(
-                            top: 20
-                          ),
-                        ),
+                            }),
+                        Padding(padding: EdgeInsets.only(top: 20)),
                         GestureDetector(
                           child: Container(
-                            height: 77,
+                            height: 55,
                             width: double.infinity,
                             decoration: BoxDecoration(
-                              color: Colors.red,
+                              color: ColorsApp.colorBoton,
                               borderRadius: BorderRadius.all(Radius.circular(38.5)),
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.grey.withOpacity(0.5),
                                   spreadRadius: 3,
                                   blurRadius: 7,
-                                  offset: Offset(
-                                    0,3
-                                  ),
+                                  offset: Offset(0, 3),
                                 ),
                               ],
                             ),
                             child: Center(
                               child: Text(
-                                "PREGUNTAS FRECUENTES",
+                                "Preguntas Frecuentes",
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500
-                                ),
+                                style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w300),
                                 strutStyle: StrutStyle(
                                   height: 1.2,
                                 ),
@@ -242,14 +173,11 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             ),
           )),
     );
   }
-
-
-
-
 }
+

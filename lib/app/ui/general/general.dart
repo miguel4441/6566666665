@@ -3,22 +3,22 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hb_check_code/hb_check_code.dart';
-import 'package:yachap/app/ui/dialog/dialog_helper.dart';
-import 'package:yachap/app/ui/general/general.presenter.dart';
-import 'package:yachap/app/ui/general/general.view.dart';
-import 'package:yachap/app/ui/nav_bar/bar.dart';
-import 'package:yachap/app/utils/resources.dart';
-import 'package:yachap/data/rr/response/consultation_general.response.dart';
-import 'package:yachap/data/rr/response/description_general.response.dart';
-import 'package:yachap/domain/repository/consultations.repository.dart';
+import 'package:yachaq/app/ui/dialog/dialog_helper.dart';
+import 'package:yachaq/app/ui/general/general.presenter.dart';
+import 'package:yachaq/app/ui/general/general.view.dart';
+import 'package:yachaq/app/ui/nav_bar/bar.dart';
+import 'package:yachaq/app/utils/colors.dart';
+import 'package:yachaq/app/utils/resources.dart';
+import 'package:yachaq/data/rr/response/consultation_general.response.dart';
+import 'package:yachaq/data/rr/response/description_general.response.dart';
+import 'package:yachaq/domain/repository/consultations.repository.dart';
 
 import 'detail/no_user_information.dart';
 import 'detail/not_found_user_information.dart';
 import 'detail/user_information.dart';
 
 class GeneralPage extends StatefulWidget {
-  static Route<dynamic> route() =>
-      MaterialPageRoute(builder: (context) => GeneralPage());
+  static Route<dynamic> route() => MaterialPageRoute(builder: (context) => GeneralPage());
 
   @override
   _GeneralPageState createState() => _GeneralPageState();
@@ -46,45 +46,28 @@ class _GeneralPageState extends State<GeneralPage> implements GeneralView {
   //String selectedDate;
   String selectedDateFormat;
 
+  //String CAPTCHA_SITE_KEY = "6LfUzY4aAAAAAB_L4wPTRFfHpU_lWy6yq7sddIfm";
+  //RecaptchaV2Controller recaptchaV2Controller = RecaptchaV2Controller();
   TextEditingController _dni = TextEditingController();
   TextEditingController _captchacode = TextEditingController();
-
-  String CAPTCHA_SITE_KEY = "6LfUzY4aAAAAAB_L4wPTRFfHpU_lWy6yq7sddIfm";
-
-  //RecaptchaV2Controller recaptchaV2Controller = RecaptchaV2Controller();
   TextEditingController dayValue = TextEditingController();
   TextEditingController yearValue = TextEditingController();
-
   GeneralPresenter generalPresenter;
 
   @override
   void initState() {
-
     monthValue = getMonthByKey(DateTime.now().month.toString());
     monthKeyValue = getKeyByMonth(monthValue);
-    dayValue.text = DateTime.now().day < 10
-        ? "0" + DateTime.now().day.toString()
-        : DateTime.now().day.toString();
+    dayValue.text = DateTime.now().day < 10 ? "0" + DateTime.now().day.toString() : DateTime.now().day.toString();
     yearValue.text = (DateTime.now().year - 65).toString();
 
-    generalPresenter =
-        GeneralPresenter(consultationsRepository: ConsultationsRepository());
+    generalPresenter = GeneralPresenter(consultationsRepository: ConsultationsRepository());
     generalPresenter.view = this;
 
     refreshCaptchaNumeric();
 
     super.initState();
     //recaptchaV2Controller.show();
-  }
-
-  @override
-  void dispose(){
-    _dni.dispose();
-    _captchacode.dispose();
-    dayValue.dispose();
-    yearValue.dispose();
-
-    super.dispose();
   }
 
   @override
@@ -98,256 +81,234 @@ class _GeneralPageState extends State<GeneralPage> implements GeneralView {
         ),
         child: SafeArea(
             child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: generalBar(context),
-          body: ListView(
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 40, left: 40, right: 40),
-                child: Column(
-                  children: [
-                    Padding(padding: EdgeInsets.only(bottom: 10)),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        width: 222,
-                        height: 58,
-                        margin: EdgeInsets.only(bottom: 77),
-                        child: Image.asset(Resources.pension65),
-                      ),
-                    ),
-                    Padding(padding: EdgeInsets.only(bottom: 20)),
-                    TextField(
-                        controller: _dni,
-                        autocorrect: false,
-                        enableSuggestions: false,
-                        maxLength: 8,
-                        textAlign: TextAlign.center,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(hintText: "Ingresa tu DNI",prefixIcon: Icon(Icons.web, color: Colors.red,),
-                          contentPadding: EdgeInsets.all(14.0),
-                          filled: true,
-                          fillColor: Colors.transparent,
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(8.0)),
-                            borderSide:
-                            BorderSide(color: Colors.black, width: 0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(8.0)),
-                            borderSide:
-                            BorderSide(color: Colors.black, width: 0),
-                          ),
-                        )),
-                    Padding(padding: EdgeInsets.only(bottom: 20)),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text("Ingresa tu fecha de nacimiento",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w500),
-                          strutStyle: StrutStyle(height: 1.2)),
-                    ),
-                    Padding(padding: EdgeInsets.only(bottom: 10)),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                backgroundColor: Colors.transparent,
+                appBar: generalBar(context),
+                body: ListView(children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 20, left: 40, right: 40),
+                    child: Column(
                       children: [
-                        Expanded(
-                            child: TextField(
-                                controller: dayValue,
-                                autocorrect: false,
-                                enableSuggestions: false,
-                                maxLength: 2,
-                                textAlign: TextAlign.center,
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(14.0),
-                                  filled: true,
-                                  fillColor: Colors.transparent,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0)),
-                                    borderSide: BorderSide(
-                                        color: Colors.black, width: 0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0)),
-                                    borderSide: BorderSide(
-                                        color: Colors.black, width: 0),
-                                  ),
-                                )),
-                            flex: 2),
-                        SizedBox(
-                          width: 10,
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: Container(
+                            width: 200,
+                            child: Image.asset(Resources.pension65),
+                          ),
                         ),
-                        Expanded(
-                            child: Container(
-                              height: 48,
-                              alignment: Alignment.topCenter,
-                              child: DropdownButtonFormField(
-                                iconSize: 0,
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(14.0),
-                                  filled: true,
-                                  fillColor: Colors.transparent,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0)),
-                                    borderSide: BorderSide(
-                                        color: Colors.black, width: 0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0)),
-                                    borderSide: BorderSide(
-                                        color: Colors.black, width: 0),
+                        Padding(padding: EdgeInsets.only(bottom: 50)),
+                        Text(
+                          "Consulta si eres usuario(a)\nde Pensión 65",
+                          style: TextStyle(fontSize: 20, color: ColorsApp.grayDark),
+                          textAlign: TextAlign.center,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                        ),
+                        TextField(
+                            controller: _dni,
+                            autocorrect: false,
+                            enableSuggestions: false,
+                            maxLength: 8,
+                            textAlign: TextAlign.center,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              hintText: "Ingresa tu DNI",
+                              prefixIcon: Image.asset(Resources.req2, scale: 2),
+                              contentPadding: EdgeInsets.all(14.0),
+                              filled: true,
+                              fillColor: Colors.white,
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                                borderSide: BorderSide(color: Colors.black, width: 0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                                borderSide: BorderSide(color: Colors.black, width: 0),
+                              ),
+                            )),
+                        Padding(padding: EdgeInsets.only(bottom: 10)),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text("Ingresa tu fecha de nacimiento",
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w200),
+                              strutStyle: StrutStyle(height: 1.2)),
+                        ),
+                        Padding(padding: EdgeInsets.only(bottom: 10)),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                                child: TextField(
+                                    controller: dayValue,
+                                    autocorrect: false,
+                                    enableSuggestions: false,
+                                    maxLength: 2,
+                                    textAlign: TextAlign.center,
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.all(14.0),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                                        borderSide: BorderSide(color: Colors.black, width: 0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                                        borderSide: BorderSide(color: Colors.black, width: 0),
+                                      ),
+                                    )),
+                                flex: 2),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                                child: Container(
+                                  height: 48,
+                                  alignment: Alignment.topCenter,
+                                  child: DropdownButtonFormField(
+                                    iconSize: 0,
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.all(12.0),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                                        borderSide: BorderSide(color: Colors.black, width: 0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                                        borderSide: BorderSide(color: Colors.black, width: 0),
+                                      ),
+                                    ),
+                                    value: monthValue,
+                                    onChanged: (String value) {
+                                      setState(() {
+                                        monthValue = value;
+                                        monthKeyValue = getKeyByMonth(monthValue);
+                                        print(monthValue);
+                                        print(monthKeyValue);
+                                      });
+                                    },
+                                    items: monthList
+                                        .map((month) => DropdownMenuItem(value: month, child: Text("$month")))
+                                        .toList(),
                                   ),
                                 ),
-                                value: monthValue,
-                                onChanged: (String value) {
-                                  setState(() {
-                                    monthValue = value;
-                                    monthKeyValue = getKeyByMonth(monthValue);
-                                    print(monthValue);
-                                    print(monthKeyValue);
-                                  });
-                                },
-                                items: monthList
-                                    .map((month) => DropdownMenuItem(
-                                    value: month, child: Text("$month")))
-                                    .toList(),
-                              ),
+                                flex: 4),
+                            SizedBox(
+                              width: 10,
                             ),
-                            flex: 4),
-                        SizedBox(
-                          width: 10,
+                            Expanded(
+                                child: TextField(
+                                    controller: yearValue,
+                                    autocorrect: false,
+                                    enableSuggestions: false,
+                                    maxLength: 4,
+                                    textAlign: TextAlign.center,
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.all(14.0),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                                        borderSide: BorderSide(color: Colors.black, width: 0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                                        borderSide: BorderSide(color: Colors.black, width: 0),
+                                      ),
+                                    )),
+                                flex: 3),
+                          ],
                         ),
-                        Expanded(
-                            child: TextField(
-                                controller: yearValue,
-                                autocorrect: false,
-                                enableSuggestions: false,
-                                maxLength: 4,
-                                textAlign: TextAlign.center,
-                                keyboardType: TextInputType.number,
-                                decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.all(14.0),
-                                  filled: true,
-                                  fillColor: Colors.transparent,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0)),
-                                    borderSide: BorderSide(
-                                        color: Colors.black, width: 0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0)),
-                                    borderSide: BorderSide(
-                                        color: Colors.black, width: 0),
-                                  ),
+                        Padding(padding: EdgeInsets.only(bottom: 20)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                                padding: EdgeInsets.all(2),
+                                child: HBCheckCode(
+                                  code: code,
+                                  dotCount: 0,
+                                  height: 30,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(
+                                      color: Colors.grey, // set border color
+                                      width: 1), // set border width
+                                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
                                 )),
-                            flex: 3),
-                      ],
-                    ),
-                    Padding(padding: EdgeInsets.only(bottom: 20)),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                            padding: EdgeInsets.all(5),
-                            child: HBCheckCode(
-                              code: code,
-                              dotCount: 0,
-                            ),
-                            decoration: BoxDecoration(
-                              //color: Colors.orange,
-                              border: Border.all(
-                                  color: Colors.black,// set border color
-                                  width: 0.5),   // set border width
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(10.0)),
+                            FlatButton(
+                              minWidth: 30,
+                              height: 30,
+                              child: Image.asset(Resources.refresh, width: 30, height: 30),
+                              onPressed: () {
+                                setState(() {
+                                  refreshCaptchaNumeric();
+                                });
+                              },
                             )
+                          ],
                         ),
-                        FlatButton(
-                          minWidth: 30,
-                          height: 30,
-                          child: Image.asset(Resources.refresh, width: 30, height: 30),
-                          onPressed: () {
-                            setState(() {
-                              refreshCaptchaNumeric();
-                            });
-                          },
-                        )
+                        Padding(padding: EdgeInsets.only(bottom: 20)),
+                        TextField(
+                            controller: _captchacode,
+                            autocorrect: false,
+                            enableSuggestions: false,
+                            maxLength: 4,
+                            textAlign: TextAlign.center,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(14.0),
+                              hintText: "Ingresa el número captcha",
+                              filled: true,
+                              fillColor: Colors.white,
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                                borderSide: BorderSide(color: Colors.black, width: 0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                                borderSide: BorderSide(color: Colors.black, width: 0),
+                              ),
+                            )),
+                        Padding(padding: EdgeInsets.only(bottom: 20)),
+                        Container(
+                          height: 36,
+                          width: 100,
+                          decoration: BoxDecoration(boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 3,
+                              blurRadius: 7,
+                              offset: Offset(0, 3), // changes position of shadow
+                            )
+                          ]),
+                          child: FlatButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25.0),
+                              side: BorderSide(color: ColorsApp.colorBoton, width: 1),
+                            ),
+                            textColor: Colors.white,
+                            color: ColorsApp.colorBoton,
+                            child: Text(
+                              "Buscar",
+                              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w100),
+                              strutStyle: StrutStyle(height: 1.2),
+                            ),
+                            onPressed: () {
+                              validateDni();
+                            },
+                          ),
+                        ),
+                        Padding(padding: EdgeInsets.only(bottom: 50)),
                       ],
                     ),
-                    Padding(padding: EdgeInsets.only(bottom: 20)),
-                    
-                    Padding(padding: EdgeInsets.only(bottom: 10)),
-                    TextField(
-                        controller: _captchacode,
-                        autocorrect: false,
-                        enableSuggestions: false,
-                        maxLength: 4,
-                        textAlign: TextAlign.center,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          hintText: "Ingresa el número captcha",
-                          contentPadding: EdgeInsets.all(14.0),
-                          filled: true,
-                          fillColor: Colors.transparent,
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(8.0)),
-                            borderSide:
-                            BorderSide(color: Colors.black, width: 0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(8.0)),
-                            borderSide:
-                            BorderSide(color: Colors.black, width: 0),
-                          ),
-                        )),
-                    Padding(padding: EdgeInsets.only(bottom: 20)),
-                    Container(
-                      height: 50,
-                      width: 100,
-                      decoration: BoxDecoration(boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 3,
-                          blurRadius: 7,
-                          offset: Offset(0, 3), // changes position of shadow
-                        )
-                      ]),
-                      child: FlatButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          side: BorderSide(color: Colors.red, width: 1),
-                        ),
-                        textColor: Colors.white,
-                        color: Colors.red,
-                        child: Text(
-                          "Buscar",
-                          style: TextStyle(
-                              fontSize: 16.0, fontWeight: FontWeight.bold),
-                          strutStyle: StrutStyle(height: 1.2),
-                        ),
-                        onPressed: () {
-                          validateDni();
-                        },
-                      ),
-                    ),
-                    Padding(padding: EdgeInsets.only(bottom: 50)),
-                  ],
-                ),
-              )
-            ]
-          )
-        )));
+                  )
+                ]))));
   }
 
   String getKeyByMonth(String month) {
@@ -439,10 +400,8 @@ class _GeneralPageState extends State<GeneralPage> implements GeneralView {
   }
 
   refreshCaptchaNumeric() {
-
     code = "";
-
-    for(var i = 0; i < 4; i++) {
+    for (var i = 0; i < 4; i++) {
       code = code + Random().nextInt(9).toString();
     }
   }
@@ -454,38 +413,25 @@ class _GeneralPageState extends State<GeneralPage> implements GeneralView {
           if (yearValue.text != null && yearValue.text.isNotEmpty) {
             if (int.parse(yearValue.text) <= (DateTime.now().year - 65)) {
               selectedDateFormat = yearValue.text + monthKeyValue + dayValue.text;
-              /*if (Platform.isAndroid) {
-                FGrecaptcha.verifyWithRecaptcha(CAPTCHA_SITE_KEY).then((result) {
-                  generalPresenter.getUserInformation(_dni.text, selectedDateFormat);
-                }, onError: (e, s) {});
-              } else {
-                generalPresenter.getUserInformation(_dni.text, selectedDateFormat);
-              }*/
               if (code == _captchacode.text) {
                 generalPresenter.getUserInformation(_dni.text, selectedDateFormat);
               } else {
-                _showErrorMessage(
-                    "Consulta general", "Debes ingresar el código númerico correctamente.");
+                _showErrorMessage("Consulta General", "Debes ingresar el código númerico correctamente.");
               }
             } else {
-              _showErrorMessage(
-                  "Consulta general", "Debes tener 65 a más años.");
+              _showErrorMessage("Consulta General", "Debes tener 65 a más años.");
             }
           } else {
-            _showErrorMessage(
-                "Consulta general", "Ingresa un año");
+            _showErrorMessage("Consulta General", "Ingresa un año");
           }
         } else {
-          _showErrorMessage(
-              "Consulta general", "Selecciona un mes");
+          _showErrorMessage("Consulta General", "Selecciona un mes");
         }
       } else {
-        _showErrorMessage(
-            "Consulta general", "Ingresa un día");
+        _showErrorMessage("Consulta General", "Ingresa un día");
       }
     } else {
-      _showErrorMessage(
-          "Consulta general", "Ingresa tu número de DNI y fecha de nacimiento");
+      _showErrorMessage("Consulta General", "Ingresa tu número de DNI");
     }
   }
 
@@ -493,18 +439,28 @@ class _GeneralPageState extends State<GeneralPage> implements GeneralView {
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
-      barrierColor: Colors.black.withOpacity(0.3), // user must tap button!
+      barrierColor: Colors.black.withOpacity(0.3),
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Text(title, strutStyle: StrutStyle(height: 1.2)),
           content: Text(message, strutStyle: StrutStyle(height: 1.2)),
           actions: <Widget>[
             CupertinoDialogAction(
-              child: Text('Ok', strutStyle: StrutStyle(height: 1.2)),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
+                child: FlatButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  textColor: Colors.white,
+                  color: ColorsApp.colorBoton,
+                  child: Text(
+                    "Ok",
+                    style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w100),
+                    strutStyle: StrutStyle(height: 1),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )),
           ],
         );
       },
@@ -512,19 +468,13 @@ class _GeneralPageState extends State<GeneralPage> implements GeneralView {
   }
 
   @override
-  getUserInformation(ConsultationGeneralResponse userInformation,
-      DescriptionGeneralResponse descriptionResponse) {
-    if (userInformation.CONDICION == "USUARIO") {
-      Navigator.push(context,
-          UserInformationPage.route(userInformation, descriptionResponse));
-    } else if (userInformation.CONDICION == "NO ENCONTRADO" || userInformation.CONDICION == "") {
-      Navigator.push(
-          context,
-          NotFoundUserInformationPage.route(
-              userInformation, descriptionResponse));
+  getUserInformation(ConsultationGeneralResponse userInformation, DescriptionGeneralResponse descriptionResponse) {
+    if (userInformation.CONDICION == "USUARIO" || userInformation.CONDICION == "POTENCIAL") {
+      Navigator.push(context, UserInformationPage.route(userInformation, descriptionResponse));
+    } else if (userInformation.CONDICION == "NO ENCONTRADO" || userInformation.CONDICION == "ADULTO MAYOR") {
+      Navigator.push(context, NotFoundUserInformationPage.route(userInformation, descriptionResponse));
     } else {
-      Navigator.push(context,
-          NoUserInformationPage.route(userInformation, descriptionResponse));
+      Navigator.push(context, NoUserInformationPage.route(userInformation, descriptionResponse));
     }
   }
 
@@ -540,6 +490,6 @@ class _GeneralPageState extends State<GeneralPage> implements GeneralView {
 
   @override
   onError(String message) {
-    _showErrorMessage("Consulta general", message);
+    _showErrorMessage("Consulta General", message);
   }
 }

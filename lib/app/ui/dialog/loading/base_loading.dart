@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yachap/app/utils/resources.dart';
+import 'package:yachaq/app/utils/resources.dart';
 
 class BaseLoadingPage extends StatefulWidget {
   @override

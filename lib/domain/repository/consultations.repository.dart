@@ -1,9 +1,9 @@
-import 'package:yachap/data/http_api_rest.dart';
-import 'package:yachap/data/rr/response/consultation_general.response.dart';
-import 'package:yachap/data/rr/response/consultation_pension.response.dart';
-import 'package:yachap/data/rr/response/description.response.dart';
-import 'package:yachap/data/rr/response/description_general.response.dart';
-import 'package:yachap/domain/usecase/consultations.usecase.dart';
+import 'package:yachaq/data/http_api_rest.dart';
+import 'package:yachaq/data/rr/response/consultation_general.response.dart';
+import 'package:yachaq/data/rr/response/consultation_pension.response.dart';
+import 'package:yachaq/data/rr/response/description.response.dart';
+import 'package:yachaq/data/rr/response/description_general.response.dart';
+import 'package:yachaq/domain/usecase/consultations.usecase.dart';
 
 class ConsultationsRepository implements ConsultationUseCase {
 

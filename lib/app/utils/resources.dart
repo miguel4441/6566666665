@@ -13,4 +13,14 @@ class Resources {
   static const String general = 'images/consulta_general.png';
   static const String pension = 'images/consulta_pension.png';
   static const String refresh = 'images/refresh.png';
+  static const String icon0 = 'images/icon0.png';
+  static const String icon1 = 'images/icon1.png';
+  static const String icon2 = 'images/icon2.png';
+  static const String icon3 = 'images/icon3.png';
+  static const String icon4 = 'images/icon4.png';
+  static const String req0 = 'images/req0.png';
+  static const String req1 = 'images/req1.png';
+  static const String req2 = 'images/req2.png';
+  static const String req3 = 'images/req3.png';
+  static const String req4 = 'images/req4.png';
 }

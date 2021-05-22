@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yachap/app/ui/dialog/loading/base_loading.dart';
+import 'package:yachaq/app/ui/dialog/loading/base_loading.dart';
 
 class DialogHelper {
   static loading(context) => showDialog(

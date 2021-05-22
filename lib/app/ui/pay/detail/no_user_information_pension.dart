@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:yachap/app/ui/nav_bar/bar.dart';
-import 'package:yachap/app/utils/resources.dart';
-import 'package:yachap/data/rr/response/consultation_pension.response.dart';
-import 'package:yachap/data/rr/response/description.response.dart';
+import 'package:yachaq/app/ui/nav_bar/bar.dart';
+import 'package:yachaq/app/utils/colors.dart';
+import 'package:yachaq/app/utils/resources.dart';
+import 'package:yachaq/data/rr/response/consultation_pension.response.dart';
+import 'package:yachaq/data/rr/response/description.response.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NoUserInformationPensionPage extends StatefulWidget {
@@ -12,19 +13,14 @@ class NoUserInformationPensionPage extends StatefulWidget {
 
   NoUserInformationPensionPage(this.userInfo, this.descriptionInfo);
 
-  static Route<dynamic> route(ConsultationPensionResponse userInformation,
-          DescriptionResponse descriptionResponse) =>
-      MaterialPageRoute(
-          builder: (context) => NoUserInformationPensionPage(
-              userInformation, descriptionResponse));
+  static Route<dynamic> route(ConsultationPensionResponse userInformation, DescriptionResponse descriptionResponse) =>
+      MaterialPageRoute(builder: (context) => NoUserInformationPensionPage(userInformation, descriptionResponse));
 
   @override
-  _NoUserInformationPensionPageState createState() =>
-      _NoUserInformationPensionPageState();
+  _NoUserInformationPensionPageState createState() => _NoUserInformationPensionPageState();
 }
 
-class _NoUserInformationPensionPageState
-    extends State<NoUserInformationPensionPage> {
+class _NoUserInformationPensionPageState extends State<NoUserInformationPensionPage> {
   String label = '';
   bool modalidadShow = true;
   bool lugarpagoShow = true;
@@ -32,9 +28,6 @@ class _NoUserInformationPensionPageState
   bool fechapagoShow = true;
   bool personaCobroShow = true;
   bool infraclabelmontoShow = true;
-  bool activeLugarPagoAgencia = false;
-  String msjLugarPagoAgencia = '';
-  String labelperiodo = 'Periodo: ';
 
   @override
   void initState() {
@@ -56,17 +49,6 @@ class _NoUserInformationPensionPageState
       personaCobroShow = false;
     }
 
-    if(widget.userInfo.MODALIDAD_PAGO == "Agencia Bancaria"){
-      modalidadShow = false;
-      lugarpagoShow = false;
-      iconShow = false;
-      labelperiodo = 'Periodos: ';
-      if(condicion != "INFRACTOR"){
-        activeLugarPagoAgencia = true;
-        msjLugarPagoAgencia = 'Puede cobrarlo en cualquier agencia del Banco de la Nación';
-      }
-    }
-
     label = widget.userInfo.FECHAPAGOLABEL;
   }
 
@@ -86,396 +68,296 @@ class _NoUserInformationPensionPageState
         ),
         child: SafeArea(
             child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: pensionBar(context),
-          body: Container(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              padding:
-                  EdgeInsets.only(top: 20, left: 40, right: 40, bottom: 40),
-              child: Center(
-                child: Column(
-                  children: [
-                    Container(
-                      width: 222,
-                      height: 58,
-                      margin: EdgeInsets.only(bottom: 77),
-                      child: Image.asset(Resources.pension65),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 10),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              backgroundColor: Colors.transparent,
+              appBar: pensionBar(context),
+              body: Container(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  padding: EdgeInsets.only(top: 20, left: 40, right: 40, bottom: 40),
+                  child: Center(
+                    child: Column(
                       children: [
-                        Flexible(
-                          child: Text("Hola, ",
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.normal)),
+                        Container(
+                            height: 58,
+                            width: 222,
+                            margin: EdgeInsets.only(bottom: 77),
+                            child: Image.asset(Resources.pension65)),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 20),
                         ),
-                        Flexible(
-                          child: Text(widget.userInfo.NOMBRES,
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w900),
-                              strutStyle: StrutStyle(height: 1.4)),
-                        )
-                      ],
-                    ),
-                    Container(
-                        height: 150,
-                        width: 150,
-                        //color: Colors.grey,
-                        child: Image.asset(Resources.pension,
-                            width: 150, height: 150)),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 20),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 10),
-                    ),
-                    Visibility(child: Text(
-                      widget.userInfo.MONTO.isNotEmpty
-                          ? "Tienes un depósito en tu cuenta"
-                          : "Lamentablemente usted",
-                        style: TextStyle(fontSize: 16),
-                      ), visible: infraclabelmontoShow,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 10),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(20.0)
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Image.asset(
-                              widget.userInfo.MONTO.isNotEmpty
-                                  ? Resources.check_green
-                                  : Resources.close_red,
-                              width: 50,
-                              height: 50,
-                              fit: BoxFit.contain),
-                          Padding(
-                            padding: EdgeInsets.only(right: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Flexible(
+                              child: Text("Hola, ", style: TextStyle(fontSize: 20, fontWeight: FontWeight.normal)),
+                            ),
+                            Flexible(
+                              child: Text(widget.userInfo.NOMBRES,
+                                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+                                  strutStyle: StrutStyle(height: 1.4)),
+                            )
+                          ],
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 10),
+                        ),
+                        Visibility(
+                          child: Text(
+                            widget.userInfo.MONTO.isNotEmpty ? "Tienes un depósito en tu cuenta" : "Lamentablemente usted",
+                            style: TextStyle(fontSize: 16),
                           ),
-                          Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                    widget.userInfo.MONTO.isNotEmpty
-                                        ? "Monto"
-                                        : "NO figura en el",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
+                          visible: infraclabelmontoShow,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 10),
+                        ),
+                        Container(
+                          //padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              color: Colors.white,
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(38.0)),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Image.asset(Resources.close_red, width: 55, height: 55, fit: BoxFit.contain),
+                              Padding(
+                                padding: EdgeInsets.only(right: 10),
+                              ),
+                              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                Padding(
+                                  padding: EdgeInsets.only(top: 2),
+                                ),
+                                Text(widget.userInfo.CONDICION,
+                                    style: TextStyle(fontSize: 23, fontWeight: FontWeight.w300),
+                                    strutStyle: StrutStyle(height: 1.2)),
+                                Text("S/. " + int.parse(widget.userInfo.MONTO).toStringAsFixed(0),
+                                    style:
+                                    TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: ColorsApp.colorBoton),
                                     strutStyle: StrutStyle(height: 1.2)),
                                 Padding(
-                                  padding: EdgeInsets.only(bottom: 5),
+                                  padding: EdgeInsets.only(bottom: 2),
                                 ),
-                                Text(
-                                  widget.userInfo.MONTO.isNotEmpty
-                                      ? "S/. " +
-                                          int.parse(widget.userInfo.MONTO)
-                                              .toStringAsFixed(2)
-                                      : "Padrón de usuarios",
-                                  style: TextStyle(fontSize: 18),
-                                )
-                              ])
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 10),
-                    ),
-                    RichText(textAlign: TextAlign.center,
-                      text: TextSpan(
-                        children: [
-                          WidgetSpan(
-                            child: Icon(Icons.arrow_right_sharp, size: 30, color: Colors.red),
-                            style: TextStyle(
-                              fontSize: 30,
-                            ),
+                              ]),
+                              Padding(
+                                padding: EdgeInsets.only(right: 20),
+                              )
+                            ],
                           ),
-                          TextSpan(
-                            text: labelperiodo,
-                            style: TextStyle(
-                                fontSize: 16,color: Colors.black
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 5),
-                    ),
-                    Text(widget.userInfo.PERIODO ?? "-",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                        strutStyle: StrutStyle(height: 1.2)),
-                    Visibility(
-                      child: Padding(
-                        padding: EdgeInsets.only(bottom: 20),
-                      ),
-                      visible: personaCobroShow,
-                    ),
-                    Visibility(
-                      child: Align(
-                          alignment: Alignment.center,
-                            child: RichText(textAlign: TextAlign.center,
-                              text: TextSpan(
-                                children: [
-                                  WidgetSpan(
-                                    child: Icon(Icons.arrow_right_sharp, size: 30, color: Colors.red),
-                                    style: TextStyle(
-                                      fontSize: 30,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: "La persona autorizada para realizar el cobro es : ",
-                                    style: TextStyle(
-                                        fontSize: 16,color: Colors.black
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                      visible: personaCobroShow,
-                    ),
-                    Visibility(
-                      child: Padding(
-                        padding: EdgeInsets.only(bottom: 10),
-                      ),
-                      visible: personaCobroShow,
-                    ),
-                    Visibility(
-                      child: Align( alignment: Alignment.center,
-                        child: Text(widget.userInfo.TERCERO ?? "-",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                          strutStyle: StrutStyle(height: 1.2)),),
-                      visible: personaCobroShow,
-                    ),
-                Visibility(
-                  child:Padding(
-                      padding: EdgeInsets.only(bottom: 20),
-                    ),visible: modalidadShow,
-                ),
-                    Visibility(
-                      child: Align(alignment: Alignment.center, child:
-                      RichText(textAlign: TextAlign.center,
-                        text: TextSpan(
-                          children: [
-                            WidgetSpan(
-                              child: Icon(Icons.arrow_right_sharp, size: 30, color: Colors.red),
-                              style: TextStyle(
-                                fontSize: 30,
-                              ),
-                            ),
-                            TextSpan(
-                              text: "Tu Modalidad de pago es:",
-                              style: TextStyle(
-                                  fontSize: 16,color: Colors.black
-                              ),
-                            ),
-                          ],
                         ),
-                      ),
-
-                      ),
-                      visible: modalidadShow,
-                    ),
-                    Visibility(
-                      child: Padding(
-                        padding: EdgeInsets.only(bottom: 10),
-                      ),
-                      visible: modalidadShow,
-                    ),
-                    Visibility(
-                      child:  Align(alignment: Alignment.center, child: Text(widget.userInfo.MODALIDAD_PAGO ?? "-",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                          strutStyle: StrutStyle(height: 1.2)),),
-                      visible: modalidadShow,
-                    ),
-                Visibility(
-                  child: Padding(
-                      padding: EdgeInsets.only(bottom: 20),
-                    ),
-                  visible: lugarpagoShow,
-                ),
-                    Visibility(
-                      child: RichText(textAlign: TextAlign.center,
-                        text: TextSpan(
-                          children: [
-                            WidgetSpan(
-                              child: Icon(Icons.arrow_right_sharp, size: 30, color: Colors.red),
-                              style: TextStyle(
-                                fontSize: 30,
-                              ),
-                            ),
-                            TextSpan(
-                              text: "Tu lugar de pago es:",
-                              style: TextStyle(
-                                  fontSize: 16,color: Colors.black
-                              ),
-                            ),
-                          ],
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 10),
                         ),
-                      ),
-                      visible: lugarpagoShow,
-                    ),
-                    Visibility(
-                      child: Padding(
-                        padding: EdgeInsets.only(bottom: 10),
-                      ),
-                      visible: lugarpagoShow,
-                    ),
-                    Visibility(
-                      child: Text(widget.userInfo.LUGAR_AGENCIA ?? "-",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                          strutStyle: StrutStyle(height: 1.2)),
-                      visible: lugarpagoShow,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 20),
-                    ),
-                    Visibility(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Visibility(
-                              visible: widget.userInfo.LATITUD != null &&
-                                  widget.userInfo.LONGITUD != null &&
-                                  widget.userInfo.LONGITUD.isNotEmpty &&
-                                  widget.userInfo.LATITUD.isNotEmpty,
-                              child: SizedBox(
-                                width: 20,
-                              )),
-                          Visibility(
-                              visible: widget.userInfo.LATITUD != null &&
-                                  widget.userInfo.LONGITUD != null &&
-                                  widget.userInfo.LONGITUD.isNotEmpty &&
-                                  widget.userInfo.LATITUD.isNotEmpty,
-                              child: Container(
-                                  //padding: EdgeInsets.only(left: 20),
-                                  child: GestureDetector(
-                                child: Image.asset(Resources.location,
-                                    width: 40, height: 40, fit: BoxFit.contain),
-                                onTap: () {
-                                  _launchURL(widget.userInfo.LATITUD,
-                                      widget.userInfo.LONGITUD);
-                                },
-                              ))),
-                        ],
-                      ),
-                      visible: iconShow,
-                    ),
-                    /*Visibility(
-                      child: Padding(
-                        padding: EdgeInsets.only(bottom: 20),
-                      ),
-                      visible: activeLugarPagoAgencia,
-                    ),*/
-                    Visibility(child:Align(alignment: Alignment.center,
-                      child: Text(
-                        "*"+msjLugarPagoAgencia+"*",
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),),visible: activeLugarPagoAgencia),
-                    Visibility(
-                      child: Padding(
-                        padding: EdgeInsets.only(bottom: 20),
-                      ),
-                      visible: fechapagoShow,
-                    ),
-                    Visibility(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: RichText(textAlign: TextAlign.center,
+                        RichText(
+                          textAlign: TextAlign.center,
                           text: TextSpan(
                             children: [
                               WidgetSpan(
-                                child: Icon(Icons.arrow_right_sharp, size: 30, color: Colors.red),
+                                child: Icon(Icons.arrow_right_sharp, size: 30, color: ColorsApp.colorBoton),
                                 style: TextStyle(
                                   fontSize: 30,
                                 ),
                               ),
                               TextSpan(
-                                text: label,
-                                style: TextStyle(
-                                    fontSize: 16,color: Colors.black
-                                ),
+                                text: 'Periodo:',
+                                style: TextStyle(fontSize: 16, color: Colors.black),
                               ),
                             ],
                           ),
                         ),
-                      ),
-                      visible: fechapagoShow,
-                    ),
-                    Visibility(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                          child: Text(widget.userInfo.FECHA_PAGO ?? "-",
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 5),
+                        ),
+                        Text(widget.userInfo.PERIODO ?? "-",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                            strutStyle: StrutStyle(height: 1.2)),
+                        Visibility(
+                          child: Padding(
+                            padding: EdgeInsets.only(bottom: 20),
+                          ),
+                          visible: personaCobroShow,
+                        ),
+                        Visibility(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "La persona autorizada para realizar el cobro es : ",
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold),
-                              strutStyle: StrutStyle(height: 1.2)),
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                          visible: personaCobroShow,
                         ),
-                      ),
-                      visible: fechapagoShow,
+                        Visibility(
+                          child: Padding(
+                            padding: EdgeInsets.only(bottom: 10),
+                          ),
+                          visible: personaCobroShow,
+                        ),
+                        Visibility(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(widget.userInfo.TERCERO ?? "-",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                strutStyle: StrutStyle(height: 1.2)),
+                          ),
+                          visible: personaCobroShow,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                        ),
+                        Visibility(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "Tu Modalidad de pago es:",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                          visible: modalidadShow,
+                        ),
+                        Visibility(
+                          child: Padding(
+                            padding: EdgeInsets.only(bottom: 10),
+                          ),
+                          visible: modalidadShow,
+                        ),
+                        Visibility(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(widget.userInfo.MODALIDAD_PAGO ?? "-",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                strutStyle: StrutStyle(height: 1.2)),
+                          ),
+                          visible: modalidadShow,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                        ),
+                        Visibility(
+                          child: Text(
+                            "Tu lugar de pago es:",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          visible: lugarpagoShow,
+                        ),
+                        Visibility(
+                          child: Padding(
+                            padding: EdgeInsets.only(bottom: 10),
+                          ),
+                          visible: lugarpagoShow,
+                        ),
+                        Visibility(
+                          child: Text(widget.userInfo.LUGAR_AGENCIA ?? "-",
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                              strutStyle: StrutStyle(height: 1.2)),
+                          visible: lugarpagoShow,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 20),
+                        ),
+                        Visibility(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Visibility(
+                                  visible: widget.userInfo.LATITUD != null &&
+                                      widget.userInfo.LONGITUD != null &&
+                                      widget.userInfo.LONGITUD.isNotEmpty &&
+                                      widget.userInfo.LATITUD.isNotEmpty,
+                                  child: SizedBox(
+                                    width: 20,
+                                  )),
+                              Visibility(
+                                  visible: widget.userInfo.LATITUD != null &&
+                                      widget.userInfo.LONGITUD != null &&
+                                      widget.userInfo.LONGITUD.isNotEmpty &&
+                                      widget.userInfo.LATITUD.isNotEmpty,
+                                  child: Container(
+                                    //padding: EdgeInsets.only(left: 20),
+                                      child: GestureDetector(
+                                        child: Image.asset(Resources.location, width: 40, height: 40, fit: BoxFit.contain),
+                                        onTap: () {
+                                          _launchURL(widget.userInfo.LATITUD, widget.userInfo.LONGITUD);
+                                        },
+                                      ))),
+                            ],
+                          ),
+                          visible: iconShow,
+                        ),
+                        Visibility(
+                          child: Padding(
+                            padding: EdgeInsets.only(bottom: 20),
+                          ),
+                          visible: fechapagoShow,
+                        ),
+                        Visibility(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              label,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                          visible: fechapagoShow,
+                        ),
+                        Visibility(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Container(
+                              child: Text(widget.userInfo.FECHA_PAGO ?? "-",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                  strutStyle: StrutStyle(height: 1.2)),
+                            ),
+                          ),
+                          visible: fechapagoShow,
+                        ),
+                        Visibility(
+                          child: Padding(
+                            padding: EdgeInsets.only(bottom: 10),
+                          ),
+                          visible: fechapagoShow,
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                              color: ColorsApp.colorBoton,
+                              borderRadius: BorderRadius.all(Radius.circular(15)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 3,
+                                  blurRadius: 7,
+                                  offset: Offset(0, 3), // changes position of shadow
+                                )
+                              ]),
+                          child: Center(
+                            child: Text(widget.descriptionInfo.infotipo,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                                strutStyle: StrutStyle(height: 1.2)),
+                          ),
+                        ),
+                      ],
                     ),
-                    Visibility(
-                      child: Padding(
-                        padding: EdgeInsets.only(bottom: 10),
-                      ),
-                      visible: fechapagoShow,
-                    ),
-                Container(
-                    margin: EdgeInsets.only(
-                      left: 40,
-                      right: 40,
-                      top: 10,
-                    ),
-                    padding: EdgeInsets.all(
-                        5
-                    ),
-                    color: Colors.white10,
-                    child: Text(
-                      widget.descriptionInfo.infotipo,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textAlign: TextAlign.center,
-                      strutStyle: StrutStyle(
-                        height: 1.2,
-                      ),
-                    ),
-                ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
-        )));
+            )));
   }
 
   _launchURL(latitude, longitude) async {
-    var url =
-        'https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}';
+    var url = 'https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}';
     if (await canLaunch(url)) {
       await launch(url);
     } else {

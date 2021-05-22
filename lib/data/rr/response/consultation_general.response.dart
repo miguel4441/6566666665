@@ -25,17 +25,17 @@ class ConsultationGeneralResponse {
         this.DESCRIPTION});
 
   ConsultationGeneralResponse.fromJson(dynamic json) {
-    DNI = json['DNI'];
-    NOMBRES = json['NOMBRES'];
-    APELLIDOS_NOMBRES = json['APELLIDOS_NOMBRES'];
-    CONDICION = json['CONDICION'];
-    UBIGEO = json['UBIGEO'];
-    DEPARTAMENTO = json['DEPARTAMENTO'];
-    PROVINCIA = json['PROVINCIA'];
-    DISTRITO = json['DISTRITO'];
-    CSE = json['CSE'];
-    FECHA_VENCIMIENTO_VIGENCIA = json['FECHA_VENCIMIENTO_VIGENCIA'];
-    DESCRIPTION = json['DESCRIPTION'];
+    DNI = json['DNI'].toString().isEmpty == true ? '' : json['DNI'].toString();
+    NOMBRES = json['NOMBRES'].toString().isEmpty == true ? '' : json['NOMBRES'].toString();
+    APELLIDOS_NOMBRES = json['APELLIDOS_NOMBRES'].toString().isEmpty == true ? '' : json['APELLIDOS_NOMBRES'].toString();
+    CONDICION = json['CONDICION'].toString().isEmpty == true ? '' : json['CONDICION'].toString();
+    UBIGEO = json['UBIGEO'].toString().isEmpty == true ? '' : json['UBIGEO'].toString();
+    DEPARTAMENTO = json['DEPARTAMENTO'].toString().isEmpty == true ? '' : json['DEPARTAMENTO'].toString();
+    PROVINCIA = json['PROVINCIA'].toString().isEmpty == true ? '' : json['PROVINCIA'].toString();
+    DISTRITO = json['DISTRITO'].toString().isEmpty == true ? '' : json['DISTRITO'].toString();
+    CSE = json['CSE'].toString().isEmpty == true ? '' : json['CSE'].toString();
+    FECHA_VENCIMIENTO_VIGENCIA = json['FECHA_VENCIMIENTO_VIGENCIA'].toString().isEmpty == true ? '' : json['FECHA_VENCIMIENTO_VIGENCIA'].toString();
+    DESCRIPTION = json['DESCRIPTION'].toString().isEmpty == true ? '' : json['DESCRIPTION'].toString();
   }
 
   static List<ConsultationGeneralResponse> listFromJson(dynamic json) {
